@@ -3,6 +3,8 @@ import { baseApi } from "../fixtures/baseApi";
 import { statusCodes } from "../mapping/apiMapping";
 import {
   BookingDetailsType,
+  BookingFilterType,
+  BookingIdType,
   CreateBookingResponseType,
 } from "../models/bookingTypes";
 
@@ -12,6 +14,10 @@ export async function createBooking(bookingDetails: BookingDetailsType) {
 
 export async function getBookingById(bookingId: number) {
   return baseApi.get<BookingDetailsType>(`${urlPaths.booking}/${bookingId}`);
+}
+
+export async function getBookingIds(filters: BookingFilterType = {}) {
+  return baseApi.get<BookingIdType[]>(urlPaths.booking, { params: filters });
 }
 
 export async function deleteBooking(bookingId: number, token?: string) {
