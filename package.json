@@ -8,6 +8,9 @@
     "test:watch": "jest --watchAll",
     "pretest:report": "node -e \"require('node:fs').mkdirSync('reports', { recursive: true })\"",
     "test:report": "jest --json --outputFile=reports/test-results.json",
+    "test:allure": "allure run --results-dir allure-results --output allure-report -- jest",
+    "allure:generate": "allure generate allure-results --output allure-report --clean",
+    "allure:open": "allure open allure-report --host 127.0.0.1",
     "typecheck": "tsc --noEmit"
   },
   "repository": {
