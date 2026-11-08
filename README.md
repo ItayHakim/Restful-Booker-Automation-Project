@@ -52,14 +52,16 @@ Run the tests and generate an Allure HTML report:
 npm run test:allure
 ```
 
-This command builds the report from the current test run, including failed tests.
-The HTML report is saved to `allure-report/`. Open it in your browser with:
+This command runs Jest, generates the HTML report, and exits. Failed tests still
+produce a report and return a failing exit code. The HTML report is saved to
+`allure-report/`. Open it in your browser with:
 
 ```bash
 npm run allure:open
 ```
 
-Press Ctrl+C in the terminal to stop the report server.
+`allure:open` keeps running while the report is open because it serves the HTML
+locally. Press Ctrl+C in that terminal to stop the report server.
 
 Every Jest run also saves raw Allure results to `allure-results/`. To generate a
 report from the results already saved there:
@@ -68,8 +70,10 @@ report from the results already saved there:
 npm run allure:generate
 ```
 
-Raw results accumulate between runs. Use `npm run test:allure` for a report that
-only includes the current run. Both Allure folders are ignored by Git.
+Jest clears both `allure-results/` and `allure-report/` before each test run,
+including runs started from the IDE. Reports contain only the latest run.
+Use `npm run test:allure` to run tests and regenerate the HTML in one command.
+Both Allure folders are ignored by Git.
 The project uses [Allure Report 3](https://allurereport.org/docs/v3/install/),
 which runs through the local npm dependency.
 
@@ -133,9 +137,11 @@ booking assertions, and the function that generates unique booking details.
 
 `src/config/routes.ts` stores the base URL and API routes. `jest.config.js` runs
 one test file at a time with a 30-second test timeout. Axios requests have a
-10-second timeout. The Allure Jest environment saves test results and includes
-the Node.js version and operating system in the report. Type checking runs
-separately through `npm run typecheck`.
+10-second timeout. `src/config/cleanReports.ts` clears the previous Allure output
+once before the test suites start. The Allure Jest environment saves test results
+and includes the Node.js version and operating system in the report.
+`scripts/runAllureTests.js` runs Jest and then generates the HTML report.
+Type checking runs separately through `npm run typecheck`.
 
 ## Project Structure
 
