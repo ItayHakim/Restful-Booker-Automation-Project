@@ -1,6 +1,7 @@
 /** @type {import('jest').Config} */
 module.exports = {
   preset: "ts-jest",
+  globalSetup: "<rootDir>/src/config/cleanReports.ts",
   testEnvironment: "allure-jest/node",
   testEnvironmentOptions: {
     resultsDir: "allure-results",
