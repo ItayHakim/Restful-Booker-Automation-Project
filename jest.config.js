@@ -1,7 +1,14 @@
 /** @type {import('jest').Config} */
 module.exports = {
   preset: "ts-jest",
-  testEnvironment: "node",
+  testEnvironment: "allure-jest/node",
+  testEnvironmentOptions: {
+    resultsDir: "allure-results",
+    environmentInfo: {
+      node_version: process.version,
+      os_platform: process.platform,
+    },
+  },
   roots: ["<rootDir>/src/tests"],
   testMatch: ["**/*.spec.ts"],
   testTimeout: 30_000,
