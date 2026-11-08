@@ -72,4 +72,36 @@ describe("Booking updates", () => {
     expect(response.data).toEqual(expectedBookingDetails);
     await assertBookingDetails(bookingId, expectedBookingDetails);
   });
+
+  test.each([
+    { scenario: "without a token", token: undefined },
+    { scenario: "with an invalid token", token: "invalid-token" },
+  ])("full update is rejected $scenario", async ({ token }) => {
+    const bookingDetails = getUniqueBookingDetails();
+    const bookingId = await bookings.createBooking(bookingDetails);
+    const newBookingDetails = {
+      ...updatedBookingDetails,
+      lastname: bookingDetails.lastname,
+    };
+
+    const response = await updateBooking(bookingId, newBookingDetails, token);
+
+    expect(response.status).toBe(statusCodes.forbidden);
+    await assertBookingDetails(bookingId, bookingDetails);
+  });
+
+  test.each([
+    { scenario: "without a token", token: undefined },
+    { scenario: "with an invalid token", token: "invalid-token" },
+  ])("partial update is rejected $scenario", async ({ token }) => {
+    const bookingDetails = getUniqueBookingDetails();
+    const bookingId = await bookings.createBooking(bookingDetails);
+
+    const response = await partialUpdateBooking(bookingId, {
+      firstname: updatedBookingDetails.firstname,
+    }, token);
+
+    expect(response.status).toBe(statusCodes.forbidden);
+    await assertBookingDetails(bookingId, bookingDetails);
+  });
 });
