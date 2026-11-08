@@ -6,6 +6,7 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watchAll",
+    "pretest:report": "node -e \"require('node:fs').mkdirSync('reports', { recursive: true })\"",
     "test:report": "jest --json --outputFile=reports/test-results.json",
     "typecheck": "tsc --noEmit"
   },
