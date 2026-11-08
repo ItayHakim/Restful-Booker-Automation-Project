@@ -5,7 +5,7 @@ Backend test automation project built with Jest, TypeScript, and Axios for
 
 ## Prerequisites
 
-- Node.js 22 or newer
+- Node.js 22.18 or newer
 - npm
 
 ## Installation
@@ -43,6 +43,37 @@ npm run typecheck
 ```
 
 ## Test Reports
+
+### Allure Report
+
+Run the tests and generate an Allure HTML report:
+
+```bash
+npm run test:allure
+```
+
+This command builds the report from the current test run, including failed tests.
+The HTML report is saved to `allure-report/`. Open it in your browser with:
+
+```bash
+npm run allure:open
+```
+
+Press Ctrl+C in the terminal to stop the report server.
+
+Every Jest run also saves raw Allure results to `allure-results/`. To generate a
+report from the results already saved there:
+
+```bash
+npm run allure:generate
+```
+
+Raw results accumulate between runs. Use `npm run test:allure` for a report that
+only includes the current run. Both Allure folders are ignored by Git.
+The project uses [Allure Report 3](https://allurereport.org/docs/v3/install/),
+which runs through the local npm dependency.
+
+### JSON Report
 
 Jest prints the results in the terminal. To also save a JSON report:
 
@@ -102,7 +133,9 @@ booking assertions, and the function that generates unique booking details.
 
 `src/config/routes.ts` stores the base URL and API routes. `jest.config.js` runs
 one test file at a time with a 30-second test timeout. Axios requests have a
-10-second timeout. Type checking runs separately through `npm run typecheck`.
+10-second timeout. The Allure Jest environment saves test results and includes
+the Node.js version and operating system in the report. Type checking runs
+separately through `npm run typecheck`.
 
 ## Project Structure
 
