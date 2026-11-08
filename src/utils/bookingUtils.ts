@@ -20,6 +20,18 @@ export async function getBookingIds(filters: BookingFilterType = {}) {
   return baseApi.get<BookingIdType[]>(urlPaths.booking, { params: filters });
 }
 
+export async function updateBooking(bookingId: number, bookingDetails: BookingDetailsType, token?: string) {
+  return baseApi.put<BookingDetailsType>(`${urlPaths.booking}/${bookingId}`, bookingDetails, {
+    headers: token ? { Cookie: `token=${token}` } : {},
+  });
+}
+
+export async function partialUpdateBooking(bookingId: number, bookingDetails: Partial<BookingDetailsType>, token?: string) {
+  return baseApi.patch<BookingDetailsType>(`${urlPaths.booking}/${bookingId}`, bookingDetails, {
+    headers: token ? { Cookie: `token=${token}` } : {},
+  });
+}
+
 export async function deleteBooking(bookingId: number, token?: string) {
   return baseApi.delete<string>(`${urlPaths.booking}/${bookingId}`, {
     headers: token ? { Cookie: `token=${token}` } : {},
