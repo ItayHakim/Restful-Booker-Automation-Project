@@ -8,6 +8,9 @@
     "test:watch": "jest --watchAll",
     "pretest:report": "node -e \"require('node:fs').mkdirSync('reports', { recursive: true })\"",
     "test:report": "jest --json --outputFile=reports/test-results.json",
+    "test:allure": "node scripts/runAllureTests.js",
+    "allure:generate": "allure generate allure-results --output allure-report --clean",
+    "allure:open": "allure open allure-report --host 127.0.0.1",
     "typecheck": "tsc --noEmit"
   },
   "repository": {
@@ -18,7 +21,7 @@
   "license": "ISC",
   "type": "commonjs",
   "engines": {
-    "node": ">=22"
+    "node": ">=22.18.0"
   },
   "dependencies": {
     "axios": "^1.21.0"
@@ -26,7 +29,10 @@
   "devDependencies": {
     "@types/jest": "^30.0.0",
     "@types/node": "^26.6.6",
+    "allure": "^3.33.0",
+    "allure-jest": "^3.14.0",
     "jest": "^30.5.2",
+    "jest-environment-node": "^30.5.2",
     "ts-jest": "^29.4.15",
     "typescript": "^6.0.3"
   }
